@@ -31,3 +31,5 @@ if (typeof window !== "undefined") {
 }
 
 module.exports = calcularMDC;
+
+let exemplo = 80
