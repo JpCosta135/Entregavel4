@@ -32,3 +32,4 @@ if (typeof window !== "undefined") {
 
 module.exports = calcularMDC;
 
+let u = 80
