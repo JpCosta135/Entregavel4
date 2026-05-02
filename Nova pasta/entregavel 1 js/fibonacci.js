@@ -1,18 +1,36 @@
-var n = prompt("Número de termos:");
-var a = 0;
-var b = 1;
-var i = 2;
-var c;
-27
-if (n == 1) {
- document.write(a);
-} else {
- document.write(a + ", " + b);
+function gerarFibonacci(quantidadeTermos) {
+  if (!Number.isInteger(quantidadeTermos)) {
+    throw new Error("A quantidade de termos deve ser um número inteiro.");
+  }
+
+  if (quantidadeTermos < 0) {
+    throw new Error("A quantidade de termos não pode ser negativa.");
+  }
+
+  const sequencia = [];
+
+  if (quantidadeTermos === 0) {
+    return sequencia;
+  }
+
+  sequencia.push(0);
+
+  if (quantidadeTermos === 1) {
+    return sequencia;
+  }
+
+  sequencia.push(1);
+
+  for (let i = 2; i < quantidadeTermos; i++) {
+    sequencia.push(sequencia[i - 1] + sequencia[i - 2]);
+  }
+
+  return sequencia;
 }
-while (i < n) {
- i = i + 1;
- c = a + b;
- document.write(", " + c);
- a = b;
- b = c;
+
+if (typeof window !== "undefined") {
+  const quantidadeTermos = parseInt(prompt("Número de termos:"), 10);
+  document.write(gerarFibonacci(quantidadeTermos).join(", "));
 }
+
+module.exports = gerarFibonacci;

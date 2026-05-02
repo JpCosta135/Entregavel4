@@ -1,24 +1,47 @@
-let numeros = prompt("Digite uma lista de números separados por vírgula:").split(",").map(Number);
-
-function quicksort(arr) {
-  if (arr.length <= 1) {
-    return arr;
+function validarListaDeNumeros(numeros) {
+  if (!Array.isArray(numeros)) {
+    throw new Error("A entrada deve ser uma lista de números.");
   }
 
-  let pivo = arr[arr.length - 1];  
-  let esquerda = [];
-  let direita = [];
+  for (const numero of numeros) {
+    if (typeof numero !== "number" || Number.isNaN(numero)) {
+      throw new Error("Todos os valores devem ser números válidos.");
+    }
+  }
+}
 
-  for (let i = 0; i < arr.length - 1; i++) {
-    if (arr[i] < pivo) {
-      esquerda.push(arr[i]);
+function ordenarComQuickSort(numeros) {
+  validarListaDeNumeros(numeros);
+
+  if (numeros.length <= 1) {
+    return [...numeros];
+  }
+
+  const pivo = numeros[numeros.length - 1];
+  const menores = [];
+  const maioresOuIguais = [];
+
+  for (let i = 0; i < numeros.length - 1; i++) {
+    if (numeros[i] < pivo) {
+      menores.push(numeros[i]);
     } else {
-      direita.push(arr[i]);
+      maioresOuIguais.push(numeros[i]);
     }
   }
 
-  return [...quicksort(esquerda), pivo, ...quicksort(direita)];
+  return [
+    ...ordenarComQuickSort(menores),
+    pivo,
+    ...ordenarComQuickSort(maioresOuIguais),
+  ];
 }
 
-let numeros = [10, 7, 8, 9, 1, 5];
-document.write(quicksort(numeros)); 
+if (typeof window !== "undefined") {
+  const numeros = prompt("Digite uma lista de números separados por vírgula:")
+    .split(",")
+    .map(Number);
+
+  document.write(ordenarComQuickSort(numeros));
+}
+
+module.exports = ordenarComQuickSort;
